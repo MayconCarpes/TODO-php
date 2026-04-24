@@ -57,6 +57,7 @@ class AuthController extends Controller {
     }
 
     public function logout() {
+        session_unset();
         session_destroy();
         $this->redirect('index.php');
     }
