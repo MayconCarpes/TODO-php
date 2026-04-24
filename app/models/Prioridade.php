@@ -1,0 +1,32 @@
+<?php
+class Prioridade {
+    public static function listar() {
+        $db = Database::getConnection();
+        return $db->query("SELECT * FROM prioridade")->fetchAll();
+    }
+
+    public static function buscarPorId($id) {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM prioridade WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    }
+
+    public static function cadastrar($nome) {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("INSERT INTO prioridade (nome) VALUES (:nome)");
+        return $stmt->execute([':nome' => $nome]);
+    }
+
+    public static function atualizar($id, $nome) {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("UPDATE prioridade SET nome = :nome WHERE id = :id");
+        return $stmt->execute([':nome' => $nome, ':id' => $id]);
+    }
+
+    public static function excluir($id) {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("DELETE FROM prioridade WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
+}
