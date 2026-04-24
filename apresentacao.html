@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apresentação: Sistema Operacional TAREFAS</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+
+    <style>
+        /* FUTURISTIC FONTS */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+        
+        body, html, .reveal-viewport, .reveal { 
+            margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent !important; background-color: transparent !important;
+        }
+        
+        /* Particle Background Box */
+        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #0B0C10 0%, #000000 100%);}
+        
+        /* Typography */
+        .reveal { font-family: 'Rajdhani', sans-serif; z-index: 10; }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Orbitron', sans-serif; text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(69, 252, 255, 0.8), 0 0 30px rgba(69, 252, 255, 0.4);
+            color: #ffffff; letter-spacing: 4px; margin-bottom: 20px;
+        }
+
+        .mono { font-family: 'Share Tech Mono', monospace; }
+
+        /* Glitch Effect */
+        .glitch { position: relative; display: inline-block; color: white; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; opacity: 0.8; }
+        .glitch::before { animation: glitch-anim 2s infinite linear alternate-reverse; color: #45FCFF; z-index: -1; left: 3px; text-shadow: -2px 0 #FF003C; }
+        .glitch::after { animation: glitch-anim 3s infinite linear alternate-reverse; color: #FF003C; z-index: -2; left: -3px; text-shadow: -2px 0 #45FCFF; }
+        @keyframes glitch-anim {
+            0% { clip-path: inset(10% 0 30% 0); transform: translate(-2px, 1px); }
+            20% { clip-path: inset(50% 0 10% 0); transform: translate(2px, -1px); }
+            40% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, -1px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 1px); }
+            80% { clip-path: inset(15% 0 70% 0); transform: translate(1px, 2px); }
+            100% { clip-path: inset(40% 0 40% 0); transform: translate(-1px, 0); }
+        }
+
+        /* Cyberpunk Panel */
+        .cyber-panel {
+            background: rgba(11, 12, 16, 0.85); backdrop-filter: blur(10px);
+            border: 1px solid rgba(69, 252, 255, 0.2); border-left: 4px solid #45FCFF; border-right: 4px solid #FF003C;
+            padding: 20px; border-radius: 4px; box-shadow: 0 0 20px rgba(69, 252, 255, 0.1), inset 0 0 15px rgba(255, 0, 60, 0.05);
+            transition: all 0.3s ease; margin: 15px 0;
+        }
+        
+        /* COLORS & TEXT */
+        .reveal p, .reveal li { color: #C5C6C7; font-size: 1.15rem; line-height: 1.6; font-weight: 500; text-align: left; }
+        .cyber-text { color: #45FCFF; font-weight: 700; text-shadow: 0 0 8px rgba(69,252,255,0.5); }
+        .neon-red { color: #FF003C; font-weight: 700; text-shadow: 0 0 8px rgba(255,0,60,0.5); }
+        .matrix-green { color: #66FF00; font-weight: 700; text-shadow: 0 0 8px rgba(102,255,0,0.5); }
+        .yellow-loot { color: #FCEE0A; font-weight: 700; text-shadow: 0 0 8px rgba(252,238,10,0.5); }
+
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; }
+
+        /* Pre Code Frame */
+        .reveal pre { box-shadow: 0 0 20px rgba(69,252,255,0.2); border: 1px solid #45FCFF; border-left: 5px solid #FF003C; border-radius: 2px; font-size: 0.9em; width: 100%; margin: 10px 0;}
+        .reveal code { max-height: 400px; }
+
+        .typewriter {
+            overflow: hidden; white-space: nowrap; margin: 0 auto;
+            border-right: .15em solid #45FCFF; animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #45FCFF; } }
+
+        /* Achievement Popup */
+        .achievement {
+            position: absolute; bottom: 20px; right: 20px; background: rgba(11,12,16,0.95);
+            border: 2px solid #FCEE0A; border-radius: 5px; padding: 15px 25px;
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 0 20px rgba(252,238,10,0.4); opacity: 0;
+            transform: translateY(20px); transition: all 0.5s; z-index: 999;
+        }
+        .achievement.show { opacity: 1; transform: translateY(0); }
+        .ach-icon { font-size: 2.5rem; }
+
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- SLIDE 1: START SCREEN -->
+            <section data-transition="zoom" class="text-center">
+                <div style="display:inline-block; border: 1px solid rgba(69,252,255,0.3); padding: 5px 15px; border-radius: 20px; margin-bottom: 20px;">
+                    <span class="mono" style="color: #66FF00; font-size: 0.9rem;">> CONEXÃO ESTABELECIDA // PING: 12ms</span>
+                </div>
+                
+                <h2 class="glitch" data-text="TASK_MANAGER_OS" style="font-size: 3.5rem; margin: 10px 0;">TASK_MANAGER_OS</h2>
+                
+                <div class="cyber-panel" style="display: inline-block; padding: 10px 20px;">
+                    <p style="text-align: center; margin: 0;" class="mono cyber-text">Arquitetura PHP MVC nativa</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <p class="typewriter mono" style="font-size: 1.1rem; color: #FCEE0A;">> PRESS START TO INITIALIZE _</p>
+                    <p style="font-size: 0.9rem; margin-top:20px; color:#8F9CA3">Use [Espaço] ou [Setas] para avançar</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: ENTREGAS -->
+            <section data-transition="convex">
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="matrix-green">[LOG]</span> UPDATE DE SISTEMA V2.0</h3>
+                <p style="margin-bottom: 10px; font-size: 1rem; color: #8F9CA3;" class="mono">Refatorando a base após Avaliação Passada...</p>
+                
+                <div class="cyber-panel">
+                    <h4 class="cyber-text" style="font-size: 1.1rem;">🔧 HOTFIXES APLICADOS</h4>
+                    <ul style="list-style-type: '>'; padding-left: 20px;" class="mono">
+                        <li style="margin-bottom: 10px;"><b>Modelagem de Dados:</b> Regras de banco SQLite alinhadas estritamente com as requisições da Entrega II.</li>
+                        <li style="margin-bottom: 10px;"><b>Usabilidade Integrada:</b> Telas do frontend corrigidas, bugs de direcionamento sanados e perfis segmentados.</li>
+                        <li><b>Database Expansion:</b> Todas tabelas integradas e lógicas normalizadas.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: O NÚCLEO MVC -->
+            <section>
+                <section data-transition="slide">
+                    <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="neon-red">[CORE]</span> ARQUITETURA MVC (VISÃO GERAL)</h3>
+                    <p class="mono" style="margin-bottom: 20px;">Sem frameworks. Uma engine puramente construída em PHP.</p>
+                    
+                    <div class="grid-3">
+                        <div class="cyber-panel" style="padding: 10px; border-right: none; border-left-color: #45FCFF">
+                            <h4 class="cyber-text" style="font-size: 1.2rem;">MODEL (A Base)</h4>
+                            <p class="mono" style="font-size: 0.9rem;text-align:center;">Responsável por conversar com o banco (SQLite). PDO Puro.</p>
+                        </div>
+                        <div class="cyber-panel" style="padding: 10px; border-right: none; border-left-color: #66FF00">
+                            <h4 class="matrix-green" style="font-size: 1.2rem;">VIEW (A Tela)</h4>
+                            <p class="mono" style="font-size: 0.9rem;text-align:center;">Templates em PHP+HTML alimentados por variáveis.</p>
+                        </div>
+                        <div class="cyber-panel" style="padding: 10px; border-right: none; border-left-color: #FF003C">
+                            <h4 class="neon-red" style="font-size: 1.2rem;">CTRL (O Cérebro)</h4>
+                            <p class="mono" style="font-size: 0.9rem;text-align:center;">O maestro. Recebe a URL, pega Dados do Model e joga na View.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; text-align:center;">
+                        <p class="mono" style="color: #45FCFF; font-size: 0.9rem;">> (Pressione a Seta Baixo para ver o código)</p>
+                    </div>
+                </section>
+                
+                <!-- MVC CODE - MODEL -->
+                <section>
+                    <h4 style="text-align: left; color:#45FCFF" class="mono">1. CÓDIGO - CAMADA MODEL</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin:0">Operações isoladas usando abstração PDO para segurança contra injeção.</p>
+                    <pre><code class="language-php" data-trim data-noescape>
+// ARQUIVO: app/models/Tarefa.php
+public static function listarPorUsuario($usuario_id) {
+    // A Camada model esconde a complexidade do SQL
+    $db = Database::getConexao();
+    
+    // INNER JOIN para buscar nomes de status e prioridade
+    $stmt = $db->prepare("SELECT t.*, s.nome as status_nome, p.nome as prioridade_nome 
+        FROM tarefa t 
+        JOIN status s ON t.status_id = s.id
+        JOIN prioridade p ON t.prioridade_id = p.id
+        WHERE t.usuario_id = ? ORDER BY t.data_entrega ASC");
+        
+    $stmt->execute([$usuario_id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Devolve o array pronto
+}
+                    </code></pre>
+                </section>
+
+                <!-- MVC CODE - CONTROLLER -->
+                <section>
+                    <h4 style="text-align: left; color:#FF003C" class="mono">2. CÓDIGO - CAMADA CONTROLLER</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin:0">A Rota solicita que o Controller aja. Ele lê o model e passa para a View.</p>
+                    <pre><code class="language-php" data-trim data-noescape>
+// ARQUIVO: app/controllers/TarefaController.php
+public function index() {
+    // 1. Quem está logado? (Se não tiver, é derrubado antes)
+    $usuario_id = $_SESSION['usuario_id'];
+    
+    // 2. Chama o MODEL para pegar as Tarefas
+    $tarefas = Tarefa::listarPorUsuario($usuario_id);
+    
+    // 3. Empacota os dados e joga para renderizar na VIEW
+    $this->render('tarefa/index', [
+        'tarefas' => $tarefas
+    ]);
+}
+                    </code></pre>
+                </section>
+
+                <!-- MVC CODE - VIEW -->
+                <section>
+                    <h4 style="text-align: left; color:#66FF00" class="mono">3. CÓDIGO - CAMADA VIEW</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin:0">A View pega as "tarefas" injetadas e quebra num formato visual HTML.</p>
+                    <pre><code class="language-html" data-trim data-noescape>
+&lt;!-- ARQUIVO: app/views/tarefa/index.php --&gt;
+&lt;div class="grid"&gt;
+    &lt;!-- Laço de repetição lendo os dados injetados pelo Controller --&gt;
+    &lt;?php foreach ($tarefas as $t): ?&gt;
+        
+        &lt;div class="card_tarefa"&gt;
+            &lt;h3&gt;  &lt;?= htmlspecialchars($t['titulo']) ?&gt;  &lt;/h3&gt;
+            &lt;span&gt; Status: &lt;?= $t['status_nome'] ?&gt; &lt;/span&gt;
+            
+            &lt;!-- Links de ação direcionando de volta pro Controller --&gt;
+            &lt;a href="index.php?c=tarefa&a=form&id=&lt;?= $t['id'] ?&gt;"&gt; Editar &lt;/a&gt;
+        &lt;/div&gt;
+
+    &lt;?php endforeach; ?&gt;
+&lt;/div&gt;
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- SLIDE 4: SECURITY -->
+            <section>
+                <section>
+                    <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="yellow-loot">[SEC]</span> SEGURANÇA E CRIPTOGRAFIA</h3>
+                    <p class="mono" style="margin-bottom: 20px;">Protocolos ICE Ativos: Dados protegidos contra invasões no Banco.</p>
+
+                    <div class="cyber-panel" style="border-left-color: #FCEE0A; margin: 10px 0;">
+                        <h4 class="yellow-loot" style="font-size: 1.1rem;">HASHING NATIVO</h4>
+                        <p class="mono">O sistema NUNCA salva a senha original. Se o banco vazar, o atacante apenas verá um "Bcrypt Hash" incompreensível.</p>
+                    </div>
+                    <div style="margin-top: 10px; text-align:center;">
+                        <p class="mono" style="color: #45FCFF; font-size: 0.9rem;">> (Ver código de Criptografia Abaixo ↓)</p>
+                    </div>
+                </section>
+                <section>
+                    <h4 style="text-align: left; color:#FCEE0A" class="mono">> CRIPTOGRAFANDO NO CADASTRO</h4>
+                    <pre><code class="language-php" data-trim data-noescape>
+// O Administrador cadastra um usuário novo
+public static function cadastrar($nome, $email, $senha, $perfil) {
+    $db = Database::getConexao();
+
+    // 🔴 BLOQUEIO: Transforma "123456" em algo como "$2y$10$w8T9..."
+    // Se a senha vazar, não serve de nada
+    $hash = password_hash($senha, PASSWORD_DEFAULT);
+    
+    $stmt = $db->prepare("INSERT INTO usuario (nome, email, senha, perfil) 
+                          VALUES (?, ?, ?, ?)");
+                          
+    $stmt->execute([$nome, $email, $hash, $perfil]);
+}
+                    </code></pre>
+                </section>
+                <section>
+                    <h4 style="text-align: left; color:#FCEE0A" class="mono">> VALIDANDO O LOGIN SEGURO</h4>
+                    <p style="font-size: 0.9rem;">Como saber se a senha original digitada bate com o texto criptografado?</p>
+                    <pre><code class="language-php" data-trim data-noescape>
+// Autenticação (Login)
+public static function buscarPorEmail($email) { // ... pega via DB }
+
+$usuario = Usuario::buscarPorEmail($emailDigitado);
+
+// 🔴 MAGIA: password_verify()
+// Ele compara a senha limpa da tela com o código bizarro do DB.
+// Se bater, devolve True.
+if ($usuario && password_verify($senhaDigitada, $usuario['senha'])) {
+    
+    // Autenticado com Sucesso: Grava o ticket (Sessão)
+    $_SESSION['usuario_id'] = $usuario['id'];
+    $_SESSION['usuario_perfil'] = $usuario['perfil'];
+
+} else {
+    // Alerta de Invasão!
+    $erro = "Falha Crítica: Credenciais inválidas!";
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- SLIDE 5: LOGIN & LOGOUT EXPLICADO -->
+            <section>
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="neon-red">[SYS]</span> LÓGICA DE LOGOUT</h3>
+                <p class="mono" style="margin-bottom: 20px;">O encerramento global retira todo acesso do usuário da memória do servidor.</p>
+                <div class="cyber-panel">
+                    <pre><code class="language-php" data-trim data-noescape>
+// Classe AuthController ...
+public function logout() {
+    
+    // 1. Limpa todas as chaves associadas a este computador
+    session_unset();
+    
+    // 2. Oblitera a sessão global ativa no servidor PHP
+    session_destroy();
+    
+    // 3. Redireciona violentamente para fora do sistema protegido
+    $this->redirect('index.php?c=auth&a=index');
+}
+                    </code></pre>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: CONTROLE DE ACESSO -->
+            <section>
+                <section data-transition="convex">
+                    <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="matrix-green">[NET]</span> RANKS E PERMISSÕES</h3>
+                    <p class="mono" style="margin-bottom: 20px;">O sistema barra viajantes não autorizados.</p>
+                    <div class="grid-2">
+                        <div class="cyber-panel" style="border-left-color: #FF003C;">
+                            <h4 class="neon-red" style="font-size: 1.1rem;">👑 GAME MASTER (ADMIN)</h4>
+                            <p class="mono">Construtor Global. Controle total sobre Usuários, Tabelas Base e Parâmetros. Nada é escondido.</p>
+                        </div>
+                        <div class="cyber-panel" style="border-left-color: #66FF00;">
+                            <h4 class="matrix-green" style="font-size: 1.1rem;">👤 PLAYER COMUM (ALUNO)</h4>
+                            <p class="mono">Acesso enclausurado (Sandboxed). Só visualiza as próprias tarefas e nada mais.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; text-align:center;">
+                        <p class="mono" style="color: #45FCFF; font-size: 0.9rem;">> (Como o sistema bloqueia invasores? Veja ↓)</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h4 style="text-align: left; color:#66FF00" class="mono">> MIDDLEWARE DE BLOQUEIO (FIREWALL LOGIC)</h4>
+                    <pre><code class="language-php" data-trim data-noescape>
+// Estas funções ficam no Controller mestre.
+// Todo controller derivado executa-as na inicialização (__construct)
+
+protected function checkAuth() { 
+    // É anônimo? Cai.
+    if (!isset($_SESSION['usuario_id'])) {
+        $this->redirect('index.php');
+    }
+}
+
+protected function checkAdmin() {
+    $this->checkAuth(); // Verifica se está logado primeiro
+    
+    // Tenta acessar tela de Admin mas é apenas um aluno? CAI.
+    if ($_SESSION['usuario_perfil'] !== 'ADMIN') {
+        die("Acesso negado. Intrusão detectada.");
+    }
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- SLIDE 7: CRUD TOTAL -->
+            <section>
+                <section data-transition="zoom-in">
+                    <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="yellow-loot">[INV]</span> CRUD: INVENTÁRIO DINÂMICO</h3>
+                    <p class="mono" style="margin-bottom: 15px;">Manipulação bidirecional completa interligando <span class="cyber-text">4 TABELAS.</span></p>
+                    
+                    <div class="cyber-panel" style="padding:15px; margin: 10px 0;">
+                        <ul style="list-style: none; display: flex; justify-content: space-around; margin:0;" class="mono">
+                            <li><span class="matrix-green">[C]</span>REATE</li>
+                            <li><span class="cyber-text">[R]</span>EAD</li>
+                            <li><span style="color:#FCEE0A">[U]</span>PDATE</li>
+                            <li><span class="neon-red">[D]</span>ELETE</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-2 text-center" style="gap: 10px;">
+                        <span class="cyber-panel" style="padding: 10px; margin:0;">👤 TABELA: USUÁRIOS</span>
+                        <span class="cyber-panel" style="padding: 10px; margin:0; border-color:#FF003C">📝 TABELA: TAREFAS</span>
+                        <span class="cyber-panel" style="padding: 10px; margin:0; border-color:#66FF00">📊 TABELA: STATUS</span>
+                        <span class="cyber-panel" style="padding: 10px; margin:0; border-color:#FCEE0A">🔥 TABELA: PRIORIDADES</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h4 style="text-align: left; color:#FCEE0A" class="mono">> EX de CRUD: Deletando um Status</h4>
+                    <p class="mono" style="font-size: 0.9rem;">Exemplo puro de roteamento destruindo um item de banco de dados.</p>
+                    <pre><code class="language-php" data-trim data-noescape>
+// CAMADA CONTROLLER: AdminController.php
+public function status_excluir() {
+
+    // 1. O Controlador pega o ID na URL (/?c=admin&a=status_excluir&id=5)
+    $id = $_GET['id'] ?? null;
+    
+    if ($id) {
+        // 2. Chama a Camada Modelo repassando a Ordem
+        Status::excluir($id);
+    }
+    
+    // 3. Após explodir o dado, realoca o usuario para a lista principal
+    $this->redirect('index.php?c=admin&a=status');
+}
+
+// CAMADA MODELO: Status.php
+public static function excluir($id) {
+    // A Camada modelo processa o código seguro anti-ruído.
+    $db = Database::getConexao();
+    $stmt = $db->prepare("DELETE FROM status WHERE id = ?");
+    $stmt->execute([$id]);
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- CONCLUSAO / ACHIEVEMENT -->
+            <section data-transition="slide" class="text-center" id="final-slide">
+                <h4 style="color: #66FF00; font-size: 1.5rem; letter-spacing: 5px;">> QUEST COMPLETADA</h4>
+                <h2 style="font-size: 3.5rem; margin: 15px 0 30px; color: #fff;">SISTEMA ONLINE.</h2>
+                
+                <div class="cyber-panel" style="display: inline-block; padding: 25px 40px; margin-top: 0; text-align: left;">
+                    <ul style="list-style: none; padding: 0; font-size: 1.2rem;" class="mono">
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Ajustes (Entrega II)</li>
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Arquitetura MVC Segura</li>
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> CRUD Interligado (4 Tabelas)</li>
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Criptografia Ativa (Anti-SQLi)</li>
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Gestão de Ranks (Logins/Logout)</li>
+                    </ul>
+                </div>
+                
+                <div class="achievement" id="achBox">
+                    <div class="ach-icon">🏆</div>
+                    <div style="text-align: left;">
+                        <div style="color: #FCEE0A; font-family: 'Orbitron'; font-size: 0.9rem;">ACHIEVEMENT UNLOCKED</div>
+                        <div style="color: white; font-family: 'Rajdhani'; font-weight: bold; font-size: 1.1rem;">Full Stack MVC Developer</div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Init Presentation
+        Reveal.initialize({
+            hash: true, controls: true, progress: true, center: true,
+            transition: 'slide', plugins: [ RevealHighlight ],
+            width: 1000, height: 700, margin: 0.1, minScale: 0.2, maxScale: 1.5
+        });
+
+        // Background Particles
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": ["#45FCFF", "#FF003C", "#66FF00"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 2.5, "random": true },
+                "line_linked": { "enable": true, "distance": 130, "color": "#45FCFF", "opacity": 0.25, "width": 1 },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 3 } }
+            },
+            "retina_detect": true
+        });
+
+        // Trigger Achievement when reaching last slide
+        Reveal.on('slidechanged', event => {
+            if(event.currentSlide.id === 'final-slide') {
+                setTimeout(() => { document.getElementById('achBox').classList.add('show'); }, 1000);
+            } else {
+                document.getElementById('achBox').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
