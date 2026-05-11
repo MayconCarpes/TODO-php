@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apresentação Metodologia: TASK MANAGER</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+
+    <style>
+        /* FUTURISTIC FONTS */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+        
+        body, html, .reveal-viewport, .reveal { 
+            margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: transparent !important; background-color: transparent !important;
+        }
+        
+        /* Particle Background Box */
+        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #0B0C10 0%, #000000 100%);}
+        
+        /* Typography */
+        .reveal { font-family: 'Rajdhani', sans-serif; z-index: 10; }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Orbitron', sans-serif; text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(69, 252, 255, 0.8), 0 0 30px rgba(69, 252, 255, 0.4);
+            color: #ffffff; letter-spacing: 4px; margin-bottom: 20px;
+        }
+
+        .mono { font-family: 'Share Tech Mono', monospace; }
+
+        /* Glitch Effect */
+        .glitch { position: relative; display: inline-block; color: white; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; opacity: 0.8; }
+        .glitch::before { animation: glitch-anim 2s infinite linear alternate-reverse; color: #45FCFF; z-index: -1; left: 3px; text-shadow: -2px 0 #FF003C; }
+        .glitch::after { animation: glitch-anim 3s infinite linear alternate-reverse; color: #FF003C; z-index: -2; left: -3px; text-shadow: -2px 0 #45FCFF; }
+        @keyframes glitch-anim {
+            0% { clip-path: inset(10% 0 30% 0); transform: translate(-2px, 1px); }
+            20% { clip-path: inset(50% 0 10% 0); transform: translate(2px, -1px); }
+            40% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, -1px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 1px); }
+            80% { clip-path: inset(15% 0 70% 0); transform: translate(1px, 2px); }
+            100% { clip-path: inset(40% 0 40% 0); transform: translate(-1px, 0); }
+        }
+
+        /* Cyberpunk Panel */
+        .cyber-panel {
+            background: rgba(11, 12, 16, 0.85); backdrop-filter: blur(10px);
+            border: 1px solid rgba(69, 252, 255, 0.2); border-left: 4px solid #45FCFF; border-right: 4px solid #FF003C;
+            padding: 20px; border-radius: 4px; box-shadow: 0 0 20px rgba(69, 252, 255, 0.1), inset 0 0 15px rgba(255, 0, 60, 0.05);
+            transition: all 0.3s ease; margin: 15px 0;
+        }
+        
+        /* COLORS & TEXT */
+        .reveal p, .reveal li { color: #C5C6C7; font-size: 1.15rem; line-height: 1.6; font-weight: 500; text-align: left; }
+        .cyber-text { color: #45FCFF; font-weight: 700; text-shadow: 0 0 8px rgba(69,252,255,0.5); }
+        .neon-red { color: #FF003C; font-weight: 700; text-shadow: 0 0 8px rgba(255,0,60,0.5); }
+        .matrix-green { color: #66FF00; font-weight: 700; text-shadow: 0 0 8px rgba(102,255,0,0.5); }
+        .yellow-loot { color: #FCEE0A; font-weight: 700; text-shadow: 0 0 8px rgba(252,238,10,0.5); }
+        .purple-neon { color: #B026FF; font-weight: 700; text-shadow: 0 0 8px rgba(176,38,255,0.5); }
+
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; }
+
+        .typewriter {
+            overflow: hidden; white-space: nowrap; margin: 0 auto;
+            border-right: .15em solid #45FCFF; animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #45FCFF; } }
+
+        /* Custom Progress Bar for Metrics */
+        .progress-bar { width: 100%; background-color: #2b2b2b; border-radius: 5px; margin: 10px 0; border: 1px solid #45FCFF; overflow: hidden; }
+        .progress-fill { height: 20px; background: linear-gradient(90deg, #45FCFF, #66FF00); }
+
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- SLIDE 1: START SCREEN -->
+            <section data-transition="zoom" class="text-center">
+                <div style="display:inline-block; border: 1px solid rgba(69,252,255,0.3); padding: 5px 15px; border-radius: 20px; margin-bottom: 20px;">
+                    <span class="mono" style="color: #66FF00; font-size: 0.9rem;">> PLANEJAMENTO ÁGIL // SPRINT SYNC</span>
+                </div>
+                
+                <h2 class="glitch" data-text="TASK_MANAGER_OS" style="font-size: 3.5rem; margin: 10px 0;">TASK_MANAGER_OS</h2>
+                
+                <div class="cyber-panel" style="display: inline-block; padding: 10px 20px;">
+                    <p style="text-align: center; margin: 0;" class="mono cyber-text">Metodologia Ágil e Planejamento</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <p class="typewriter mono" style="font-size: 1.1rem; color: #FCEE0A;">> PRESS START TO VIEW ROADMAP _</p>
+                    <p style="font-size: 0.9rem; margin-top:20px; color:#8F9CA3">Use [Espaço] ou [Setas] para avançar</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: EVOLUÇÃO E DEMONSTRAÇÃO -->
+            <section data-transition="convex">
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="matrix-green">[SYS]</span> EVOLUÇÃO DO SISTEMA</h3>
+                <p style="margin-bottom: 10px; font-size: 1rem; color: #8F9CA3;" class="mono">Comparativo: Entregas Anteriores vs MVP Atual</p>
+                
+                <div class="grid-2">
+                    <div class="cyber-panel" style="border-left-color: #FF003C;">
+                        <h4 class="neon-red" style="font-size: 1.1rem;">ENTREGA ANTERIOR</h4>
+                        <ul style="list-style-type: '>'; padding-left: 20px;" class="mono">
+                            <li style="font-size: 0.95rem;">Interface estática e básica</li>
+                            <li style="font-size: 0.95rem;">Scripts soltos em PHP</li>
+                            <li style="font-size: 0.95rem;">Ausência de controle de sessão</li>
+                            <li style="font-size: 0.95rem;">Falta de segurança em BD</li>
+                        </ul>
+                    </div>
+                    <div class="cyber-panel" style="border-left-color: #66FF00;">
+                        <h4 class="matrix-green" style="font-size: 1.1rem;">ESTADO ATUAL (MVP)</h4>
+                        <ul style="list-style-type: '>'; padding-left: 20px;" class="mono">
+                            <li style="font-size: 0.95rem;">Arquitetura MVC robusta nativa</li>
+                            <li style="font-size: 0.95rem;">Autenticação e Senhas com Hash</li>
+                            <li style="font-size: 0.95rem;">CRUD Completo de Tarefas SQLite</li>
+                            <li style="font-size: 0.95rem;">Controle de perfis (Admin/Aluno)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; text-align: center;">
+                    <p class="mono cyber-text" style="font-size: 1rem; text-align: center;">> <a href="http://localhost/scrum-todo-app/" target="_blank" style="color: #45FCFF; text-decoration: underline;">[CLIQUE PARA DEMONSTRAÇÃO FUNCIONAL]</a></p>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: METODOLOGIA -->
+            <section>
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="purple-neon">[MET]</span> FERRAMENTAS E MÉTODOS</h3>
+                <p class="mono" style="margin-bottom: 20px;">Como o time está organizado para garantir as entregas.</p>
+                
+                <div class="grid-3">
+                    <div class="cyber-panel" style="padding: 10px; border-right: none; border-left-color: #45FCFF">
+                        <h4 class="cyber-text" style="font-size: 1.2rem;">SCRUM</h4>
+                        <p class="mono" style="font-size: 0.85rem;text-align:left;">
+                            - Sprints de 2 Semanas<br>
+                            - Daily assíncrona (Discord)<br>
+                            - Review & Retrospectiva ao fim de cada ciclo.
+                        </p>
+                    </div>
+                    <div class="cyber-panel" style="padding: 10px; border-right: none; border-left-color: #FCEE0A">
+                        <h4 class="yellow-loot" style="font-size: 1.2rem;">KANBAN</h4>
+                        <p class="mono" style="font-size: 0.85rem;text-align:left;">
+                            - Fluxo visual das tarefas (To Do, Doing, Code Review, Done).<br>
+                            - Controle de gargalos no desenvolvimento.
+                        </p>
+                    </div>
+                    <div class="cyber-panel" style="padding: 10px; border-right: none; border-left-color: #FF003C">
+                        <h4 class="neon-red" style="font-size: 1.2rem;">GITHUB</h4>
+                        <p class="mono" style="font-size: 0.85rem;text-align:left;">
+                            - GitHub Projects para gestão do Board.<br>
+                            - Pull Requests para Code Review.<br>
+                            - Versionamento de código.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: EQUIPE -->
+            <section data-transition="slide">
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="yellow-loot">[TEAM]</span> DISTRIBUIÇÃO DE TAREFAS</h3>
+                <p class="mono" style="margin-bottom: 20px;">Divisão de papéis e atuação transversal no desenvolvimento.</p>
+                
+                <div class="cyber-panel">
+                    <table style="width:100%; color: white; font-size: 0.95rem; font-family: 'Share Tech Mono';">
+                        <tr style="border-bottom: 1px solid #45FCFF; color: #45FCFF;">
+                            <th style="padding: 10px; text-align: left;">Membro</th>
+                            <th style="padding: 10px; text-align: left;">Papel Principal</th>
+                            <th style="padding: 10px; text-align: left;">Foco Atual</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Gabriel Marcelini</td>
+                            <td style="padding: 10px; color: #66FF00;">Scrum Master / Full-Stack</td>
+                            <td style="padding: 10px;">Arquitetura, Revisão de PRs e DB</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Maycoon Carpes</td>
+                            <td style="padding: 10px; color: #FCEE0A;">Desenvolvedor Full-Stack</td>
+                            <td style="padding: 10px;">Integração e Funcionalidades Core</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Cauã Fortes</td>
+                            <td style="padding: 10px; color: #FF003C;">Desenvolvedor Frontend</td>
+                            <td style="padding: 10px;">Views Tailwind, UI/UX e Testes</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Guilherme Leoni</td>
+                            <td style="padding: 10px; color: #B026FF;">Desenvolvedor Backend</td>
+                            <td style="padding: 10px;">Lógica de Controllers e Autenticação</td>
+                        </tr>
+                    </table>
+                </div>
+                <p style="font-size: 0.8rem; color: #8F9CA3;" class="mono">* Nota: O time atua de forma multifuncional. A distribuição acima reflete os focos principais da última Sprint.</p>
+            </section>
+
+            <!-- SLIDE 5: BACKLOG PRIORIZADO -->
+            <section>
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="neon-red">[REQ]</span> BACKLOG PRIORIZADO (MoSCoW)</h3>
+                <p class="mono" style="margin-bottom: 20px;">Próximas funcionalidades mapeadas por valor de negócio.</p>
+
+                <div class="cyber-panel" style="padding: 10px 20px; border-left-color: #FF003C;">
+                    <h4 class="neon-red" style="font-size: 1.1rem; margin-bottom: 5px;">MUST HAVE (Alta Prioridade)</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin: 0;">1. Dashboard Gráfico de Tarefas (Status/Prioridade)<br>2. Filtros Avançados de Busca no Grid de Tarefas</p>
+                    <p class="mono" style="font-size: 0.8rem; color: #8F9CA3;">Justificativa: Agrega valor imediato à experiência do aluno na gestão visual do tempo.</p>
+                </div>
+                
+                <div class="cyber-panel" style="padding: 10px 20px; border-left-color: #FCEE0A;">
+                    <h4 class="yellow-loot" style="font-size: 1.1rem; margin-bottom: 5px;">SHOULD HAVE (Média Prioridade)</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin: 0;">3. Notificações Visuais de Prazos Próximos<br>4. Modo Escuro (Dark Theme Toggle)</p>
+                    <p class="mono" style="font-size: 0.8rem; color: #8F9CA3;">Justificativa: Melhora a usabilidade, mas o sistema base funciona sem eles.</p>
+                </div>
+
+                <div class="cyber-panel" style="padding: 10px 20px; border-left-color: #66FF00;">
+                    <h4 class="matrix-green" style="font-size: 1.1rem; margin-bottom: 5px;">COULD HAVE (Baixa Prioridade)</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin: 0;">5. Integração Exportação PDF<br>6. Compartilhamento de Tarefas em Grupo</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: SPRINT PLANNING -->
+            <section>
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="cyber-text">[PLAN]</span> DEFINIÇÃO DAS PRÓXIMAS SPRINTS</h3>
+                <p class="mono" style="margin-bottom: 20px;">Planejamento tático com estimativas baseadas em Story Points.</p>
+
+                <div class="grid-2">
+                    <div class="cyber-panel" style="border-left-color: #45FCFF;">
+                        <h4 class="cyber-text" style="font-size: 1.1rem;">SPRINT 3 (Foco Atual)</h4>
+                        <ul style="list-style-type: '>'; padding-left: 20px;" class="mono">
+                            <li style="font-size: 0.9rem; margin-bottom: 8px;"><b>Dashboard Gráfico:</b> 8 Story Points</li>
+                            <li style="font-size: 0.9rem; margin-bottom: 8px;"><b>Filtros de Busca:</b> 5 Story Points</li>
+                            <li style="font-size: 0.9rem; margin-bottom: 8px;"><b>Correção de Bugs Menores:</b> 3 Story Points</li>
+                        </ul>
+                        <div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
+                            <span class="mono matrix-green" style="font-size: 0.9rem;">Carga Total: 16 SPs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cyber-panel" style="border-left-color: #B026FF;">
+                        <h4 class="purple-neon" style="font-size: 1.1rem;">SPRINT 4 (Próxima Meta: NEXT.JS)</h4>
+                        <ul style="list-style-type: '>'; padding-left: 20px;" class="mono">
+                            <li style="font-size: 0.9rem; margin-bottom: 8px;"><b>Estudos de Viabilidade Next.js:</b> 5 Story Points</li>
+                            <li style="font-size: 0.9rem; margin-bottom: 8px;"><b>Setup Inicial Novo Repositório:</b> 3 Story Points</li>
+                            <li style="font-size: 0.9rem; margin-bottom: 8px;"><b>Migração Frontend (React):</b> 8 Story Points</li>
+                        </ul>
+                        <div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
+                            <span class="mono matrix-green" style="font-size: 0.9rem;">Carga Total Estimada: 16 SPs</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: METRICAS -->
+            <section data-transition="slide-in zoom-out">
+                <h3 style="text-align: left; border-bottom: 1px solid #45FCFF; padding-bottom: 5px;"><span class="matrix-green">[DATA]</span> MÉTRICAS E ACOMPANHAMENTO</h3>
+                <p class="mono" style="margin-bottom: 20px;">Análise de performance e ritmo de desenvolvimento (Velocity).</p>
+
+                <div class="cyber-panel" style="margin-bottom: 15px;">
+                    <h4 class="cyber-text" style="font-size: 1rem;">VELOCITY DO TIME (Média das últimas 2 Sprints)</h4>
+                    <p class="mono" style="font-size: 1.2rem; color: white;">> 15 Story Points por Sprint</p>
+                    <p class="mono" style="font-size: 0.85rem; color: #8F9CA3;">*Baseado nisso alocamos 16 SPs na Sprint atual, buscando um leve desafio de produtividade.</p>
+                </div>
+
+                <div class="cyber-panel" style="border-left-color: #66FF00;">
+                    <h4 class="matrix-green" style="font-size: 1rem;">ENTREGAS DE VALOR (PROGRESSÃO MVP)</h4>
+                    <p class="mono" style="font-size: 0.9rem; margin-bottom: 5px;">Módulo Core MVC: 100%</p>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                    
+                    <p class="mono" style="font-size: 0.9rem; margin-bottom: 5px; margin-top: 15px;">Módulo de Relatórios / Dashboards: 15%</p>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 15%; background: linear-gradient(90deg, #FF003C, #FCEE0A);"></div></div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: CONCLUSAO -->
+            <section data-transition="slide" class="text-center" id="final-slide">
+                <h4 style="color: #66FF00; font-size: 1.5rem; letter-spacing: 5px;">> FIM DA TRANSMISSÃO</h4>
+                <h2 style="font-size: 3.5rem; margin: 15px 0 30px; color: #fff;">ESTAMOS PREPARADOS.</h2>
+                
+                <div class="cyber-panel" style="display: inline-block; padding: 25px 40px; margin-top: 0; text-align: left;">
+                    <ul style="list-style: none; padding: 0; font-size: 1.2rem;" class="mono">
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Backlog Estruturado</li>
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Ferramentas Ágeis Ativas</li>
+                        <li style="margin-bottom: 10px;"><span class="matrix-green">[X]</span> Entregas Contínuas e Mensuráveis</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <p class="mono cyber-text" style="font-size: 1.2rem;">Dúvidas? Acessem o <a href="https://github.com/GabrielMarcelini/scrum-todo-app/" target="_blank" style="color: #FCEE0A;">Repositório</a>.</p>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Init Presentation
+        Reveal.initialize({
+            hash: true, controls: true, progress: true, center: true,
+            transition: 'slide', plugins: [ RevealHighlight ],
+            width: 1000, height: 700, margin: 0.1, minScale: 0.2, maxScale: 1.5
+        });
+
+        // Background Particles
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": ["#45FCFF", "#FF003C", "#66FF00"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 2.5, "random": true },
+                "line_linked": { "enable": true, "distance": 130, "color": "#45FCFF", "opacity": 0.25, "width": 1 },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 3 } }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
