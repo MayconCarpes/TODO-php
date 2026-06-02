@@ -1,174 +1,60 @@
-# Gerenciador de Tarefas para Alunos do Ensino Superior
+# Gerenciador de Tarefas Acadêmicas - Dockerizado
 
-## Contexto
-Sistema de gerenciamento de tarefas voltado para alunos de cursos superiores,
-permitindo organizar atividades acadêmicas por disciplina, prioridade e status.
+## Descrição do Projeto
+Este projeto é um sistema de Gerenciamento de Tarefas Acadêmicas construído em PHP (padrão MVC) e MySQL. Como parte do Trabalho Prático da disciplina, a aplicação foi conteinerizada utilizando Docker e Docker Compose. Toda a infraestrutura sobe com um único comando, criando e populando automaticamente o banco de dados.
 
-## Tecnologias
-- **Linguagem:** PHP
-- **Banco de dados:** SQLite via PDO
-- **Interface:** HTML + Tailwind CSS (via CDN)
+## Tecnologias Utilizadas
+- **PHP 8.2** (com PDO MySQL e Apache)
+- **MySQL 8.0**
+- **Docker**
+- **Docker Compose**
+- **phpMyAdmin** (Desafio implementado)
 
-## Design
-- Utilizar **Tailwind CSS** via CDN no `<head>` de todas as páginas
-- Layout responsivo que funcione bem em desktop e mobile
-- Interface limpa, moderna e intuitiva
-- Usar cards para exibir as tarefas
-- Cores para diferenciar as prioridades:
-  - Baixa → verde (`green`)
-  - Média → amarelo (`yellow`)
-  - Alta → laranja (`orange`)
-  - Urgente → vermelho (`red`)
-- Cores para diferenciar os status:
-  - Pendente → cinza (`gray`)
-  - Em andamento → azul (`blue`)
-  - Concluída → verde (`green`)
-- Feedback visual para ações (cadastro, edição, exclusão, conclusão)
-- Botões com ícones e hover effects
-
-## Diagrama de Classes
-```mermaid
-classDiagram
-    class Usuario {
-        -id: int
-        -nome: string
-        -email: string
-        -senha: string
-        +cadastrar()
-        +editar()
-        +excluir()
-    }
-
-    class Tarefa {
-        -id: int
-        -titulo: string
-        -descricao: string
-        -disciplina: string
-        -data_criacao: date
-        -data_entrega: date
-        -usuario_id: int
-        -prioridade_id: int
-        -status_id: int
-        +cadastrar()
-        +editar()
-        +excluir()
-        +concluir()
-    }
-
-    class Status {
-        -id: int
-        -nome: string
-    }
-
-    class Prioridade {
-        -id: int
-        -nome: string
-    }
-
-    Usuario "1" --> "*" Tarefa : possui
-    Status "1" --> "*" Tarefa : define
-    Prioridade "1" --> "*" Tarefa : define
+## Estrutura do Projeto
+```text
+projeto/
+├── app/                  # Contém os códigos fonte da aplicação PHP (MVC)
+│   ├── index.php         # Ponto de entrada do sistema
+│   ├── config/           # Conexão com o Banco de Dados (Database.php)
+│   ├── controllers/      # Controladores da aplicação
+│   ├── models/           # Classes de Modelo da aplicação
+│   └── views/            # Telas da interface web
+├── database/
+│   └── init.sql          # Script de criação das tabelas e população inicial (Executado no Docker)
+├── frontend/             # O projeto SPA em Next.js construído anteriormente
+├── Dockerfile            # Configura a imagem do Apache com as extensões PHP (pdo_mysql)
+├── docker-compose.yml    # Orquestra os serviços: app, db e phpmyadmin
+├── .env                  # Variáveis de ambiente com as credenciais do banco
+├── diagrama.png          # Diagrama visual de arquitetura
+└── README.md             # Esta documentação
 ```
 
-## Banco de Dados
-O sistema deve utilizar **SQLite** como banco de dados, criado automaticamente
-pelo PHP na primeira execução via PDO.
+## Como Executar
 
-```sql
-CREATE TABLE IF NOT EXISTS status (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL
-);
+Não é necessário configurar servidores web ou servidores de banco de dados na máquina host. Apenas tenha o Docker e o Git instalados.
 
-CREATE TABLE IF NOT EXISTS prioridade (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL
-);
+1. **Clone o repositório:**
+   ```bash
+   git clone <url-do-repositorio>
+   cd <pasta-do-projeto>
+   ```
 
-CREATE TABLE IF NOT EXISTS usuario (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    senha TEXT NOT NULL
-);
+2. **Inicie os containers:**
+   ```bash
+   docker-compose up -d --build
+   ```
 
-CREATE TABLE IF NOT EXISTS tarefa (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT NOT NULL,
-    descricao TEXT,
-    disciplina TEXT,
-    data_criacao TEXT NOT NULL DEFAULT (DATE('now')),
-    data_entrega TEXT,
-    usuario_id INTEGER NOT NULL,
-    prioridade_id INTEGER NOT NULL,
-    status_id INTEGER NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (prioridade_id) REFERENCES prioridade(id),
-    FOREIGN KEY (status_id) REFERENCES status(id)
-);
+3. **Acesse as aplicações:**
+   - **Sistema Gerenciador:** [http://localhost:8080](http://localhost:8080)
+   - **Gerenciador do Banco de Dados (phpMyAdmin):** [http://localhost:8081](http://localhost:8081)
 
-INSERT INTO status (nome) VALUES
-    ('Pendente'),
-    ('Em andamento'),
-    ('Concluída');
+## Credenciais do Sistema
+Ao subir os containers, a inicialização do MySQL vai criar e popular o banco automaticamente (`database/init.sql`). Você pode fazer login no sistema com a seguinte conta de teste padrão:
 
-INSERT INTO prioridade (nome) VALUES
-    ('Baixa'),
-    ('Média'),
-    ('Alta'),
-    ('Urgente');
-```
+- **E-mail:** `admin@admin.com`
+- **Senha:** `admin123`
 
-## Páginas do Sistema
-- `index.php` — tela de login
-- `cadastro.php` — tela de cadastro de usuário
-- `dashboard.php` — listagem de tarefas do usuário logado
-- `tarefa_form.php` — formulário de cadastro e edição de tarefa
-- `tarefa_excluir.php` — exclusão de tarefa
-- `logout.php` — encerramento de sessão
-- `db.php` — conexão com o banco e criação das tabelas
+## Evidências
+*(O professor/avaliador verá aqui as capturas de tela conforme solicitado na avaliação: inclua fotos dos containers em execução, a aplicação funcionando na porta 8080, e o banco populado visto através da porta 8081).*
 
-## Funcionalidades Obrigatórias
-
-### Usuário
-- Cadastrar usuário com nome, email e senha
-- Editar dados do usuário
-- Excluir usuário (e suas tarefas em cascata)
-- Login com email e senha
-- Logout
-
-### Tarefa
-- Cadastrar tarefa com título, descrição, disciplina, data de entrega, prioridade e status
-- Editar tarefa
-- Excluir tarefa
-- Marcar tarefa como concluída
-- Listar tarefas do usuário logado
-- Filtrar tarefas por status, prioridade e disciplina
-- Ordenar tarefas por data de entrega e prioridade
-
-## Regras de Negócio
-- Um usuário pode ter muitas tarefas
-- Cada tarefa pertence a apenas um usuário
-- Cada tarefa possui obrigatoriamente um status e uma prioridade
-- A disciplina é um campo de texto livre na tarefa
-- Ao excluir um usuário, todas as suas tarefas são excluídas automaticamente
-- A senha deve ser armazenada com `password_hash()` e validada com `password_verify()`
-- A data é armazenada no formato `YYYY-MM-DD`
-- O sistema deve usar sessões PHP (`$_SESSION`) para controle de login
-- Todas as queries devem usar PDO com prepared statements para evitar SQL Injection
-- Páginas protegidas devem redirecionar para `index.php` se o usuário não estiver logado
-
-## Níveis de Prioridade
-| id | nome    |
-|----|---------|
-| 1  | Baixa   |
-| 2  | Média   |
-| 3  | Alta    |
-| 4  | Urgente |
-
-## Status disponíveis
-| id | nome          |
-|----|---------------|
-| 1  | Pendente      |
-| 2  | Em andamento  |
-| 3  | Concluída     |
+![Diagrama de Solução](./diagrama.png)

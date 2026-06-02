@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { api } from "@/mocks/db";
 import { CheckSquare, Loader2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -17,10 +18,7 @@ export default function CadastroPage() {
     setLoading(true);
 
     try {
-      // Simulating registration delay
-      await new Promise(r => setTimeout(r, 800));
-      // In a real app we'd call api.register()
-      // For the mock, just push to login
+      await api.register({ nome, email, senha, perfil: 'ALUNO' });
       alert("Cadastro realizado com sucesso! Faça login para continuar.");
       router.push("/login");
     } finally {

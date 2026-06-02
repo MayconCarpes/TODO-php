@@ -2,12 +2,12 @@
 session_start();
 
 spl_autoload_register(function ($class_name) {
-    if (file_exists(__DIR__ . '/app/controllers/' . $class_name . '.php')) {
-        require_once __DIR__ . '/app/controllers/' . $class_name . '.php';
-    } elseif (file_exists(__DIR__ . '/app/models/' . $class_name . '.php')) {
-        require_once __DIR__ . '/app/models/' . $class_name . '.php';
-    } elseif (file_exists(__DIR__ . '/app/config/' . $class_name . '.php')) {
-        require_once __DIR__ . '/app/config/' . $class_name . '.php';
+    if (file_exists(__DIR__ . '/controllers/' . $class_name . '.php')) {
+        require_once __DIR__ . '/controllers/' . $class_name . '.php';
+    } elseif (file_exists(__DIR__ . '/models/' . $class_name . '.php')) {
+        require_once __DIR__ . '/models/' . $class_name . '.php';
+    } elseif (file_exists(__DIR__ . '/config/' . $class_name . '.php')) {
+        require_once __DIR__ . '/config/' . $class_name . '.php';
     }
 });
 

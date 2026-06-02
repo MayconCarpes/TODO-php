@@ -21,7 +21,7 @@ export type Task = {
 };
 
 // Initial Mock Data
-export const mockUsers: User[] = [
+export let mockUsers: User[] = [
   { id: 1, nome: 'Matheus Guedes', email: 'matheusguedes@professor.com.br', perfil: 'ALUNO' },
   { id: 2, nome: 'Michael Tadeu', email: 'tadeu@professor.com', perfil: 'ALUNO' },
   { id: 4, nome: 'Administrador Sistema', email: 'admin@admin.com', perfil: 'ADMIN' },
@@ -72,6 +72,16 @@ export const api = {
     const user = mockUsers.find(u => u.email === email);
     if (!user || senha.length < 3) throw new Error('Credenciais inválidas');
     return user;
+  },
+
+  register: async (userData: Omit<User, 'id'>): Promise<User> => {
+    await delay(800);
+    const newUser: User = {
+      ...userData,
+      id: Math.max(...mockUsers.map(u => u.id), 0) + 1
+    };
+    mockUsers = [...mockUsers, newUser];
+    return newUser;
   },
 
   getTasks: async (userId: number): Promise<Task[]> => {
