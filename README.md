@@ -44,10 +44,5 @@ npm run dev
 - **Aplicação (Front-end):** [http://localhost:3000](http://localhost:3000)
 - **Painel do Banco (phpMyAdmin):** [http://localhost:8081](http://localhost:8081)
 
-## Credenciais do Sistema
-Para acessar a plataforma, utilize as credenciais padrão do administrador já injetadas no banco de dados:
-
-- **E-mail:** `admin@admin.com`
-- **Senha:** `admin123`
 
 *(Para o painel do phpMyAdmin, você pode acessar usando usuário `root` e senha `root`).*
