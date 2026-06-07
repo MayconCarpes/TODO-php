@@ -1,60 +1,53 @@
-# Gerenciador de Tarefas Acadêmicas - Dockerizado
+# Gerenciador de Tarefas Acadêmicas - Full Stack
 
 ## Descrição do Projeto
-Este projeto é um sistema de Gerenciamento de Tarefas Acadêmicas construído em PHP (padrão MVC) e MySQL. Como parte do Trabalho Prático da disciplina, a aplicação foi conteinerizada utilizando Docker e Docker Compose. Toda a infraestrutura sobe com um único comando, criando e populando automaticamente o banco de dados.
+Este é um sistema completo e integrado de Gerenciamento de Tarefas Acadêmicas. O projeto evoluiu para uma arquitetura moderna Full Stack, conectando uma interface gráfica rica e reativa no Front-end com um servidor Back-end conteinerizado operando com persistência real em banco de dados.
+
+A aplicação opera de **ponta a ponta**, onde o Front-end consome dinamicamente a API RESTful do PHP para operações de CRUD (Criar, Ler, Atualizar, Excluir) de usuários e tarefas.
 
 ## Tecnologias Utilizadas
-- **PHP 8.2** (com PDO MySQL e Apache)
-- **MySQL 8.0**
-- **Docker**
-- **Docker Compose**
-- **phpMyAdmin** (Desafio implementado)
+- **Front-end:** Next.js (React), Tailwind CSS e Lucide Icons.
+- **Back-end API:** PHP 8.2 (MVC) com PDO.
+- **Banco de Dados:** MySQL 8.0.
+- **Infraestrutura:** Docker e Docker Compose.
 
-## Estrutura do Projeto
+## Estrutura Simplificada
 ```text
 projeto/
-├── app/                  # Contém os códigos fonte da aplicação PHP (MVC)
-│   ├── index.php         # Ponto de entrada do sistema
-│   ├── config/           # Conexão com o Banco de Dados (Database.php)
-│   ├── controllers/      # Controladores da aplicação
-│   ├── models/           # Classes de Modelo da aplicação
-│   └── views/            # Telas da interface web
-├── database/
-│   └── init.sql          # Script de criação das tabelas e população inicial (Executado no Docker)
-├── frontend/             # O projeto SPA em Next.js construído anteriormente
-├── Dockerfile            # Configura a imagem do Apache com as extensões PHP (pdo_mysql)
-├── docker-compose.yml    # Orquestra os serviços: app, db e phpmyadmin
-├── .env                  # Variáveis de ambiente com as credenciais do banco
-├── diagrama.png          # Diagrama visual de arquitetura
+├── app/                  # API e Lógica de negócio no Back-end (PHP)
+├── database/             # Scripts de criação (init.sql) do MySQL
+├── frontend/             # Interface do usuário (SPA construída em Next.js)
+├── docker-compose.yml    # Orquestração do Back-end, Banco e phpMyAdmin
 └── README.md             # Esta documentação
 ```
 
-## Como Executar
+## Como Executar o Sistema
 
-Não é necessário configurar servidores web ou servidores de banco de dados na máquina host. Apenas tenha o Docker e o Git instalados.
+Para subir o projeto localmente, você deve levantar o servidor Back-end e, em seguida, iniciar o Front-end.
 
-1. **Clone o repositório:**
-   ```bash
-   git clone <url-do-repositorio>
-   cd <pasta-do-projeto>
-   ```
+### 1. Iniciar o Back-end e o Banco de Dados (Docker)
+Na raiz do projeto (onde está este arquivo), execute o comando do Docker para inicializar o PHP e o MySQL:
+```bash
+docker-compose up -d
+```
+> O Banco de Dados já será criado e populado automaticamente!
 
-2. **Inicie os containers:**
-   ```bash
-   docker-compose up -d --build
-   ```
+### 2. Iniciar o Front-end (Next.js)
+Abra um novo terminal, acesse a pasta do Front-end e inicie o servidor React:
+```bash
+cd frontend
+npm install   # (Apenas na primeira vez)
+npm run dev
+```
 
-3. **Acesse as aplicações:**
-   - **Sistema Gerenciador:** [http://localhost:8080](http://localhost:8080)
-   - **Gerenciador do Banco de Dados (phpMyAdmin):** [http://localhost:8081](http://localhost:8081)
+### 3. Acessar
+- **Aplicação (Front-end):** [http://localhost:3000](http://localhost:3000)
+- **Painel do Banco (phpMyAdmin):** [http://localhost:8081](http://localhost:8081)
 
 ## Credenciais do Sistema
-Ao subir os containers, a inicialização do MySQL vai criar e popular o banco automaticamente (`database/init.sql`). Você pode fazer login no sistema com a seguinte conta de teste padrão:
+Para acessar a plataforma, utilize as credenciais padrão do administrador já injetadas no banco de dados:
 
 - **E-mail:** `admin@admin.com`
 - **Senha:** `admin123`
 
-## Evidências
-*(O professor/avaliador verá aqui as capturas de tela conforme solicitado na avaliação: inclua fotos dos containers em execução, a aplicação funcionando na porta 8080, e o banco populado visto através da porta 8081).*
-
-![Diagrama de Solução](./diagrama.png)
+*(Para o painel do phpMyAdmin, você pode acessar usando usuário `root` e senha `root`).*
