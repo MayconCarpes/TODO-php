@@ -39,4 +39,4 @@ INSERT INTO prioridade (nome) VALUES ('Baixa'), ('Média'), ('Alta'), ('Urgente'
 
 -- Senha padrão do admin é admin123 hash bcrypt
 INSERT INTO usuario (nome, email, senha, perfil) 
-VALUES ('Administrador do Sistema', 'admin@admin.com', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', 'ADMIN');
+VALUES ('Administrador do Sistema', 'admin@admin.com', '$2y$12$rnIhtvwCZp2E8VDe3DV13OnM8j0QhnXlidJdyRWrDSvtTSyrp7HlO', 'ADMIN');

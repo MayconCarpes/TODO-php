@@ -20,96 +20,52 @@ export type Task = {
   usuario_id: number;
 };
 
-// Initial Mock Data
-export let mockUsers: User[] = [
-  { id: 1, nome: 'Matheus Guedes', email: 'matheusguedes@professor.com.br', perfil: 'ALUNO' },
-  { id: 2, nome: 'Michael Tadeu', email: 'tadeu@professor.com', perfil: 'ALUNO' },
-  { id: 4, nome: 'Administrador Sistema', email: 'admin@admin.com', perfil: 'ADMIN' },
-];
+const API_BASE_URL = 'http://localhost:8080/index.php?c=api&a=';
 
-export let mockTasks: Task[] = [
-  {
-    id: 1,
-    titulo: 'Configurar Next.js',
-    descricao: 'Criar a estrutura base do projeto front-end.',
-    disciplina: 'Desenvolvimento Web',
-    data_criacao: '2026-05-20',
-    data_entrega: '2026-05-22',
-    prioridade: 'Alta',
-    status: 'Concluída',
-    usuario_id: 2
-  },
-  {
-    id: 2,
-    titulo: 'Criar Componentes Base',
-    descricao: 'Construir Navbar, Sidebar e Cards.',
-    disciplina: 'Desenvolvimento Web',
-    data_criacao: '2026-05-21',
-    data_entrega: '2026-05-23',
-    prioridade: 'Média',
-    status: 'Em andamento',
-    usuario_id: 2
-  },
-  {
-    id: 3,
-    titulo: 'Estudar React Hooks',
-    descricao: 'Revisar useEffect e useState.',
-    disciplina: 'Programação Frontend',
-    data_criacao: '2026-05-22',
-    data_entrega: '2026-05-25',
-    prioridade: 'Baixa',
-    status: 'Pendente',
-    usuario_id: 2
+async function fetchApi(action: string, method: string = 'GET', body?: any) {
+  const options: RequestInit = {
+    method,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  if (body) {
+    options.body = JSON.stringify(body);
   }
-];
 
-// Mock API Functions (Simulating delays)
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  const response = await fetch(`${API_BASE_URL}${action}`, options);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Ocorreu um erro na requisição');
+  }
+
+  return data;
+}
 
 export const api = {
   login: async (email: string, senha: string): Promise<User> => {
-    await delay(800);
-    const user = mockUsers.find(u => u.email === email);
-    if (!user || senha.length < 3) throw new Error('Credenciais inválidas');
-    return user;
+    return fetchApi('login', 'POST', { email, senha });
   },
 
-  register: async (userData: Omit<User, 'id'>): Promise<User> => {
-    await delay(800);
-    const newUser: User = {
-      ...userData,
-      id: Math.max(...mockUsers.map(u => u.id), 0) + 1
-    };
-    mockUsers = [...mockUsers, newUser];
-    return newUser;
+  register: async (userData: Omit<User, 'id'> & { senha?: string }): Promise<User> => {
+    return fetchApi('register', 'POST', userData);
   },
 
   getTasks: async (userId: number): Promise<Task[]> => {
-    await delay(500);
-    return mockTasks.filter(t => t.usuario_id === userId);
+    return fetchApi(`getTasks&usuario_id=${userId}`, 'GET');
   },
 
   createTask: async (task: Omit<Task, 'id' | 'data_criacao'>): Promise<Task> => {
-    await delay(600);
-    const newTask: Task = {
-      ...task,
-      id: Math.max(...mockTasks.map(t => t.id), 0) + 1,
-      data_criacao: new Date().toISOString().split('T')[0]
-    };
-    mockTasks = [...mockTasks, newTask];
-    return newTask;
+    return fetchApi('createTask', 'POST', task);
   },
 
   updateTask: async (id: number, updates: Partial<Task>): Promise<Task> => {
-    await delay(500);
-    const index = mockTasks.findIndex(t => t.id === id);
-    if (index === -1) throw new Error('Tarefa não encontrada');
-    mockTasks[index] = { ...mockTasks[index], ...updates };
-    return mockTasks[index];
+    return fetchApi(`updateTask&id=${id}`, 'POST', updates);
   },
 
-  deleteTask: async (id: number): Promise<void> => {
-    await delay(500);
-    mockTasks = mockTasks.filter(t => t.id !== id);
+  deleteTask: async (id: number, userId: number): Promise<void> => {
+    return fetchApi(`deleteTask&id=${id}&usuario_id=${userId}`, 'GET');
   }
 };

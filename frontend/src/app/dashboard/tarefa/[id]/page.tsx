@@ -72,7 +72,7 @@ export default function EditarTarefaPage({ params }: { params: Promise<{ id: str
     if (!confirm("Tem certeza que deseja excluir esta tarefa?")) return;
     
     try {
-      await api.deleteTask(taskId);
+      await api.deleteTask(taskId, user.id);
       router.push("/dashboard");
     } catch (e) {
       alert("Erro ao excluir tarefa");
