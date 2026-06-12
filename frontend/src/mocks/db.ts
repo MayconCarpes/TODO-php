@@ -20,7 +20,7 @@ export type Task = {
   usuario_id: number;
 };
 
-const API_BASE_URL = 'http://localhost:8080/index.php?c=api&a=';
+const API_BASE_URL = '/api/';
 
 async function fetchApi(action: string, method: string = 'GET', body?: any) {
   const options: RequestInit = {
@@ -54,18 +54,18 @@ export const api = {
   },
 
   getTasks: async (userId: number): Promise<Task[]> => {
-    return fetchApi(`getTasks&usuario_id=${userId}`, 'GET');
+    return fetchApi(`tasks?usuario_id=${userId}`, 'GET');
   },
 
   createTask: async (task: Omit<Task, 'id' | 'data_criacao'>): Promise<Task> => {
-    return fetchApi('createTask', 'POST', task);
+    return fetchApi('tasks', 'POST', task);
   },
 
   updateTask: async (id: number, updates: Partial<Task>): Promise<Task> => {
-    return fetchApi(`updateTask&id=${id}`, 'POST', updates);
+    return fetchApi(`tasks/${id}`, 'PUT', updates);
   },
 
   deleteTask: async (id: number, userId: number): Promise<void> => {
-    return fetchApi(`deleteTask&id=${id}&usuario_id=${userId}`, 'GET');
+    return fetchApi(`tasks/${id}?usuario_id=${userId}`, 'DELETE');
   }
 };
