@@ -59,7 +59,7 @@ export default function EditarTarefaPage({ params }: { params: Promise<{ id: str
     
     setLoading(true);
     try {
-      await api.updateTask(taskId, formData);
+      await api.updateTask(taskId, user!.id, formData);
       router.push("/dashboard");
     } catch (err) {
       alert("Erro ao atualizar tarefa");

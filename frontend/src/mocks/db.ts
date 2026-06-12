@@ -61,8 +61,8 @@ export const api = {
     return fetchApi('tasks', 'POST', task);
   },
 
-  updateTask: async (id: number, updates: Partial<Task>): Promise<Task> => {
-    return fetchApi(`tasks/${id}`, 'PUT', updates);
+  updateTask: async (id: number, userId: number, updates: Partial<Task>): Promise<Task> => {
+    return fetchApi(`tasks/${id}`, 'PUT', { ...updates, usuario_id: userId });
   },
 
   deleteTask: async (id: number, userId: number): Promise<void> => {

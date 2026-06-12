@@ -37,7 +37,7 @@ export default function DashboardPage() {
 
   const changeStatus = async (task: Task, newStatus: Task["status"]) => {
     try {
-      const updated = await api.updateTask(task.id, { status: newStatus });
+      const updated = await api.updateTask(task.id, user!.id, { status: newStatus });
       setTasks(tasks.map(t => t.id === updated.id ? updated : t));
     } catch (e) {
       alert("Erro ao atualizar status");
