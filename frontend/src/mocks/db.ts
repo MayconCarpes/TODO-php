@@ -67,5 +67,9 @@ export const api = {
 
   deleteTask: async (id: number, userId: number): Promise<void> => {
     return fetchApi(`tasks/${id}?usuario_id=${userId}`, 'DELETE');
+  },
+
+  getReport: async (userId: number): Promise<any> => {
+    return fetchApi(`admin/report?usuario_id=${userId}`, 'GET');
   }
 };

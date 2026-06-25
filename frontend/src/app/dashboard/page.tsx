@@ -61,12 +61,22 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Minhas Tarefas</h1>
           <p className="text-slate-500 text-sm mt-1">Organize seu dia, {user.nome.split(' ')[0]}!</p>
         </div>
-        <Link 
-          href="/dashboard/tarefa/nova" 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
-        >
-          <Plus size={20} /> Nova Tarefa
-        </Link>
+        <div className="flex items-center gap-3">
+          {user.perfil === 'ADMIN' && (
+            <Link 
+              href="/dashboard/admin" 
+              className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+            >
+              Painel Admin
+            </Link>
+          )}
+          <Link 
+            href="/dashboard/tarefa/nova" 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+          >
+            <Plus size={20} /> Nova Tarefa
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
