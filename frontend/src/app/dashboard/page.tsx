@@ -100,41 +100,49 @@ export default function DashboardPage() {
                         {task.prioridade}
                       </span>
                       
-                      {/* Status actions dropdown (simplified for mock) */}
-                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      {/* Botões de Ação Sempre Visíveis */}
+                      <div className="flex gap-1">
                         {column.id !== "Pendente" && (
-                          <button onClick={() => changeStatus(task, "Pendente")} className="p-1 text-slate-400 hover:text-blue-600" title="Mover para Pendente">
+                          <button onClick={() => changeStatus(task, "Pendente")} className="p-1 text-slate-400 hover:text-blue-600 bg-slate-100 hover:bg-blue-50 rounded" title="Mover para Pendente">
                             <AlertCircle size={16} />
                           </button>
                         )}
                         {column.id !== "Em andamento" && (
-                          <button onClick={() => changeStatus(task, "Em andamento")} className="p-1 text-slate-400 hover:text-yellow-600" title="Mover para Em Andamento">
+                          <button onClick={() => changeStatus(task, "Em andamento")} className="p-1 text-slate-400 hover:text-yellow-600 bg-slate-100 hover:bg-yellow-50 rounded" title="Mover para Em Andamento">
                             <Clock size={16} />
                           </button>
                         )}
                         {column.id !== "Concluída" && (
-                          <button onClick={() => changeStatus(task, "Concluída")} className="p-1 text-slate-400 hover:text-green-600" title="Mover para Concluída">
+                          <button onClick={() => changeStatus(task, "Concluída")} className="p-1 text-slate-400 hover:text-green-600 bg-slate-100 hover:bg-green-50 rounded" title="Mover para Concluída">
                             <CheckSquare size={16} />
                           </button>
                         )}
                       </div>
                     </div>
                     
-                    <Link href={`/dashboard/tarefa/${task.id}`}>
-                      <h3 className="font-semibold text-slate-800 leading-tight mb-1 hover:text-blue-600 transition-colors">
+                    <div className="mb-3">
+                      <h3 className="font-semibold text-slate-800 leading-tight mb-1">
                         {task.titulo}
                       </h3>
-                      <p className="text-sm text-slate-500 line-clamp-2 mb-3">
+                      <p className="text-sm text-slate-500 line-clamp-2">
                         {task.descricao}
                       </p>
-                    </Link>
+                    </div>
                     
                     <div className="flex items-center justify-between text-xs text-slate-400 border-t border-slate-100 pt-3">
-                      <span className="font-medium text-slate-500 truncate max-w-[100px]">{task.disciplina}</span>
-                      <div className="flex items-center gap-1">
-                        <Calendar size={14} />
-                        <span>{new Date(task.data_entrega).toLocaleDateString('pt-BR')}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-slate-500 truncate max-w-[80px]">{task.disciplina}</span>
+                        <div className="flex items-center gap-1">
+                          <Calendar size={14} />
+                          <span>{new Date(task.data_entrega).toLocaleDateString('pt-BR')}</span>
+                        </div>
                       </div>
+                      <Link 
+                        href={`/dashboard/tarefa/${task.id}`}
+                        className="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white px-3 py-1.5 rounded font-medium transition-colors"
+                      >
+                        Editar
+                      </Link>
                     </div>
                   </div>
                 ))}

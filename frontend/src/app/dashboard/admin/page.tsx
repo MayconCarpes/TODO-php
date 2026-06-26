@@ -228,8 +228,8 @@ export default function AdminDashboardPage() {
                           <span className={`px-2 py-1 rounded text-xs font-bold ${u.perfil === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-700'}`}>{u.perfil}</span>
                         </td>
                         <td className="py-3 text-right">
-                          <button onClick={() => { setEditingUserId(u.id); setEditUserForm({ nome: u.nome, perfil: u.perfil }); }} className="text-blue-600 p-1 mx-1 hover:bg-blue-50 rounded"><Edit size={16} /></button>
-                          <button onClick={() => handleDeleteUser(u.id)} disabled={u.id === user?.id} className={`p-1 mx-1 rounded ${u.id === user?.id ? 'text-slate-300' : 'text-red-600 hover:bg-red-50'}`}><Trash2 size={16} /></button>
+                          <button onClick={() => { setEditingUserId(u.id); setEditUserForm({ nome: u.nome, perfil: u.perfil }); }} className="text-blue-600 px-2 py-1 mx-1 hover:bg-blue-50 rounded font-medium flex inline-flex items-center gap-1"><Edit size={16} /> Editar</button>
+                          <button onClick={() => handleDeleteUser(u.id)} disabled={u.id === user?.id} className={`px-2 py-1 mx-1 rounded font-medium inline-flex items-center gap-1 ${u.id === user?.id ? 'text-slate-300' : 'text-red-600 hover:bg-red-50'}`}><Trash2 size={16} /> Excluir</button>
                         </td>
                       </>
                     )}
