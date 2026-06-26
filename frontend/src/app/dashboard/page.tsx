@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [draggingId, setDraggingId] = useState<number | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -84,7 +85,21 @@ export default function DashboardPage() {
           const columnTasks = tasks.filter(t => t.status === column.id);
           
           return (
-            <div key={column.id} className="flex flex-col bg-slate-100/50 rounded-2xl p-4 border border-slate-200/60 min-h-[500px]">
+            <div 
+              key={column.id} 
+              className="flex flex-col bg-slate-100/50 rounded-2xl p-4 border border-slate-200/60 min-h-[500px]"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                if (draggingId) {
+                  const taskToMove = tasks.find(t => t.id === draggingId);
+                  if (taskToMove && taskToMove.status !== column.id) {
+                    changeStatus(taskToMove, column.id);
+                  }
+                  setDraggingId(null);
+                }
+              }}
+            >
               <div className="flex items-center justify-between mb-4 px-2">
                 <h2 className="font-semibold text-slate-700">{column.title}</h2>
                 <span className="bg-slate-200 text-slate-600 text-xs font-bold px-2 py-1 rounded-full">
@@ -94,7 +109,16 @@ export default function DashboardPage() {
               
               <div className="flex-1 space-y-3">
                 {columnTasks.map((task) => (
-                  <div key={task.id} className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 hover:shadow-md transition-shadow group">
+                  <div 
+                    key={task.id} 
+                    className={`bg-white rounded-xl p-4 shadow-sm border ${draggingId === task.id ? 'border-blue-500 opacity-50 scale-95' : 'border-slate-200'} hover:shadow-md transition-all group cursor-grab active:cursor-grabbing`}
+                    draggable
+                    onDragStart={(e) => {
+                      setDraggingId(task.id);
+                      e.dataTransfer.effectAllowed = 'move';
+                    }}
+                    onDragEnd={() => setDraggingId(null)}
+                  >
                     <div className="flex justify-between items-start mb-2">
                       <span className={`text-xs font-bold px-2 py-1 rounded-md ${priorityColors[task.prioridade]}`}>
                         {task.prioridade}
@@ -148,8 +172,8 @@ export default function DashboardPage() {
                 ))}
                 
                 {columnTasks.length === 0 && (
-                  <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center flex flex-col items-center justify-center text-slate-400 h-32">
-                    <p className="text-sm">Nenhuma tarefa</p>
+                  <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center flex flex-col items-center justify-center text-slate-400 h-32 pointer-events-none">
+                    <p className="text-sm">Solte aqui ou Nenhuma tarefa</p>
                   </div>
                 )}
               </div>
