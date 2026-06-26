@@ -14,12 +14,17 @@ export async function PUT(
       return NextResponse.json({ error: 'usuario_id é obrigatório' }, { status: 400 });
     }
 
+    const user = await prisma.user.findUnique({ where: { id: parseInt(usuario_id, 10) } });
+    if (!user) return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 404 });
+
     const task = await prisma.task.findUnique({
       where: { id: parseInt(id, 10) },
     });
 
-    if (!task || task.usuario_id !== parseInt(usuario_id, 10)) {
-      return NextResponse.json({ error: 'Tarefa não encontrada' }, { status: 404 });
+    if (!task) return NextResponse.json({ error: 'Tarefa não encontrada' }, { status: 404 });
+
+    if (task.usuario_id !== parseInt(usuario_id, 10) && user.perfil !== 'ADMIN') {
+      return NextResponse.json({ error: 'Sem permissão para alterar esta tarefa' }, { status: 403 });
     }
 
     const updatedTask = await prisma.task.update({
@@ -46,12 +51,17 @@ export async function DELETE(
       return NextResponse.json({ error: 'usuario_id é obrigatório' }, { status: 400 });
     }
 
+    const user = await prisma.user.findUnique({ where: { id: parseInt(usuario_id, 10) } });
+    if (!user) return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 404 });
+
     const task = await prisma.task.findUnique({
       where: { id: parseInt(id, 10) },
     });
 
-    if (!task || task.usuario_id !== parseInt(usuario_id, 10)) {
-      return NextResponse.json({ error: 'Tarefa não encontrada' }, { status: 404 });
+    if (!task) return NextResponse.json({ error: 'Tarefa não encontrada' }, { status: 404 });
+
+    if (task.usuario_id !== parseInt(usuario_id, 10) && user.perfil !== 'ADMIN') {
+      return NextResponse.json({ error: 'Sem permissão para deletar esta tarefa' }, { status: 403 });
     }
 
     await prisma.task.delete({

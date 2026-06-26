@@ -71,5 +71,26 @@ export const api = {
 
   getReport: async (userId: number): Promise<any> => {
     return fetchApi(`admin/report?usuario_id=${userId}`, 'GET');
+  },
+
+  // ADMIN METHODS
+  adminGetUsers: async (adminId: number): Promise<User[]> => {
+    return fetchApi(`admin/users?usuario_id=${adminId}`, 'GET');
+  },
+
+  adminCreateUser: async (adminId: number, userData: any): Promise<User> => {
+    return fetchApi(`admin/users?usuario_id=${adminId}`, 'POST', userData);
+  },
+
+  adminUpdateUser: async (adminId: number, userId: number, updates: any): Promise<User> => {
+    return fetchApi(`admin/users/${userId}?usuario_id=${adminId}`, 'PUT', updates);
+  },
+
+  adminDeleteUser: async (adminId: number, userId: number): Promise<void> => {
+    return fetchApi(`admin/users/${userId}?usuario_id=${adminId}`, 'DELETE');
+  },
+
+  adminGetTasks: async (adminId: number): Promise<any[]> => {
+    return fetchApi(`admin/tasks?usuario_id=${adminId}`, 'GET');
   }
 };
